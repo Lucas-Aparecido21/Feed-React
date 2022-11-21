@@ -1,14 +1,16 @@
 import React from 'react'
 import './Post.modules.css'
+import {Comment} from './Comment';
+import { Avatar } from './Avatar';
 export function Post()
 {
     return (
     <article className="post">
         <header>
             <div className="author">
-                <img className="avatar" src="https://cdn3.vectorstock.com/i/1000x1000/08/37/profile-icon-male-user-person-avatar-symbol-vector-20910837.jpg" />
+                <Avatar src="https://www.w3schools.com/w3images/avatar2.png" />
                 <div className="authorInfo">
-                <strong>Lucas Aparecido</strong>    
+                <strong>Diego</strong>    
                 <span>Web Developer</span>
                 </div>
                 </div>
@@ -33,6 +35,10 @@ export function Post()
             </footer>
 
             </form>
+            <div className="commentList">
+                <Comment/>
+               
+            </div>
     </article>
     );
 }
