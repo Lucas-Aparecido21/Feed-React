@@ -1,22 +1,23 @@
-import React from 'react'
+import React from 'react';
 import './Post.modules.css'
 import {Comment} from './Comment';
 import { Avatar } from './Avatar';
-export function Post()
-{
+export function Post(props){
     return (
     <article className="post">
         <header>
             <div className="author">
-                <Avatar src="https://www.w3schools.com/w3images/avatar2.png" />
+                <Avatar src={props.author.avatarUrl} />
                 <div className="authorInfo">
-                <strong>Diego</strong>    
-                <span>Web Developer</span>
+                <strong>{props.author.name}</strong>    
+                <span>{props.author.role}</span>
                 </div>
                 </div>
             
 
-            <time title ="11 de maio de 2022" dateTime="2022-05-11 08:13:00">Publicado há 1h </time>
+            <time title ="11 de maio de 2022" dateTime="2022-05-11 08:13:00">
+                {props.publishedAt.toString()}
+                </time>
 
         </header>
         <div className="content">
