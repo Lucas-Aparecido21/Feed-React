@@ -4,7 +4,7 @@ import {Trash} from 'phosphor-react'
 import {ThumbsUp} from 'phosphor-react'
 import { Avatar } from "./Avatar";
 
-export function Comment()
+export function Comment(props)
 {
     return(
         <div className="comment">
@@ -20,7 +20,7 @@ export function Comment()
                 <Trash size={24}/>
             </button>
         </header> 
-           <p>Muito bom, parabéns!!</p>
+           <p>{props.content}</p>
         </div>   
         
         <footer> 

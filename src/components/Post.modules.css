@@ -10,19 +10,19 @@
     margin-top: 2rem;
 }
 
-.content
+.content2
 {
     line-height: 1.6;
     color: var(--gray-300);
     margin-top: 1.5rem;
 }
 
-.content p 
+.content2 p 
 {
 margin-top: 1rem;
 }
 
-.content a  
+.content2 a  
 {
     font-weight: bold;
     color: var(--green-500);
@@ -30,7 +30,7 @@ margin-top: 1rem;
 
 }
 
-.content a:hover
+.content2 a:hover
 {
     color: var(--green-300);
 }

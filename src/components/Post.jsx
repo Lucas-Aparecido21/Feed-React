@@ -1,44 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Post.modules.css'
 import {Comment} from './Comment';
 import { Avatar } from './Avatar';
-export function Post(props){
+import { format, formatDistanceToNow } from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
+
+export function Post({author, publishedAt, content}){
+const publisheDateFormatted = format(publishedAt, "d 'de' LLLL 'ás' HH:mm 'h'", {locale: ptBR, })
+const publishedDateReltiveToNow= formatDistanceToNow(publishedAt, {locale: ptBR, addSuffix: true,} )
+const [comments, setComments] = useState([
+'Post  muito bacana!'
+])
+
+function handleCreateNewComment(event)
+{
+event.preventDefault()
+
+const newCommentText = event.target.comment.value
+setComments([...comments, newCommentText]);
+event.target.comment.value = '';
+
+}
     return (
     <article className="post">
         <header>
             <div className="author">
-                <Avatar src={props.author.avatarUrl} />
+                <Avatar src={author.avatarUrl} />
                 <div className="authorInfo">
-                <strong>{props.author.name}</strong>    
-                <span>{props.author.role}</span>
+                <strong>{author.name}</strong>    
+                <span>{author.role}</span>
                 </div>
                 </div>
             
 
-            <time title ="11 de maio de 2022" dateTime="2022-05-11 08:13:00">
-                {props.publishedAt.toString()}
+            <time title ={publisheDateFormatted} dateTime={ publishedAt.toISOString()}>
+              {publishedDateReltiveToNow}
                 </time>
 
         </header>
-        <div className="content">
-            <p>  Teste 1  </p>
-            <p>  Teste 2  </p>
-            <p>  Teste 3  </p>
-            <p>  <a href=""> #teste</a>  </p>
-        </div>
+        <div className="content2">
+       {content.map(line => {
+        if(line.type === 'paragraph') {
+            return <p>{line.content}</p>;
+        } else if(line.type === 'link') {
+            return <p><a href="#">{line.content}</a> </p>;
+        }
+       })}
+       </div>
 
-        <form className="commentForm">
+        <form onSubmit={handleCreateNewComment} className="commentForm">
             <strong>Deixe seu feedback</strong>
 
-            <textarea placeholder="Deixe um comentário"/>
+            <textarea name="comment" placeholder="Deixe um comentário"/>
             <footer>
             <button type="submit">Publicar</button>
             </footer>
 
             </form>
             <div className="commentList">
-                <Comment/>
-               
+               {comments.map(comment => {
+                return <Comment content={comment}/>
+               })}    
             </div>
     </article>
     );
