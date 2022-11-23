@@ -12,14 +12,29 @@ const [comments, setComments] = useState([
 'Post  muito bacana!'
 ])
 
+const [newCommentText, setNewCommentText] = useState('')
+
+function handleNewCommentChange(event){
+  setNewCommentText(event.target.value);
+}
+
 function handleCreateNewComment(event)
 {
-event.preventDefault()
-
-const newCommentText = event.target.comment.value
+event.preventDefault();
+setNewCommentText('');
 setComments([...comments, newCommentText]);
-event.target.comment.value = '';
 
+
+}
+
+function deleteComment(commentToDelete)
+{
+const commentsWithoutDeletedOne =  comments.filter(comment =>{
+    return comment !== commentToDelete;
+
+})
+
+setComments(commentsWithoutDeletedOne);
 }
     return (
     <article className="post">
@@ -41,9 +56,9 @@ event.target.comment.value = '';
         <div className="content2">
        {content.map(line => {
         if(line.type === 'paragraph') {
-            return <p>{line.content}</p>;
+            return <p key={line.content}>{line.content}</p>;
         } else if(line.type === 'link') {
-            return <p><a href="#">{line.content}</a> </p>;
+            return <p key={line.content}><a href="#">{line.content}</a> </p>;
         }
        })}
        </div>
@@ -51,7 +66,11 @@ event.target.comment.value = '';
         <form onSubmit={handleCreateNewComment} className="commentForm">
             <strong>Deixe seu feedback</strong>
 
-            <textarea name="comment" placeholder="Deixe um comentário"/>
+            <textarea name="comment" 
+            placeholder="Deixe um comentário"
+            onChange={handleNewCommentChange}
+            value={newCommentText}
+            />
             <footer>
             <button type="submit">Publicar</button>
             </footer>
@@ -59,7 +78,10 @@ event.target.comment.value = '';
             </form>
             <div className="commentList">
                {comments.map(comment => {
-                return <Comment content={comment}/>
+                return <Comment key={comment}
+                 content={comment}
+                 onDeleteComment={deleteComment}
+                 />
                })}    
             </div>
     </article>
